@@ -73,26 +73,21 @@ git add *.pdf create_pdf.py backend/*.pdf
 commit "assets: Add test PDF files"
 
 # 7. Frontend
+# Configs
 git add frontend/package.json frontend/tsconfig.json frontend/next.config.ts frontend/postcss.config.mjs frontend/Dockerfile
 commit "frontend: Initialize Next.js app with Docker"
 
-git add frontend/components/ui/ frontend/lib/utils.ts
-commit "frontend: Add Shadcn UI components"
+# Libs (API, Utils if present)
+git add frontend/lib/
+commit "frontend: Implement API client and utilities"
 
-git add frontend/lib/api.ts
-commit "frontend: Implement API client wrappers"
+# Source (Globals, Layout)
+git add frontend/src/
+commit "frontend: Setup global styles, layout and src structure"
 
-git add frontend/app/globals.css frontend/app/layout.tsx
-commit "frontend: Setup global styles and layout"
-
-git add frontend/app/page.tsx
-commit "frontend: Implement Dashboard page"
-
-git add frontend/app/documents/
-commit "frontend: Implement Document Details and Review UI"
-
-git add frontend/app/evaluations/
-commit "frontend: Implement Evaluation Dashboard"
+# App Router Pages (Dashboard, Documents, Evals)
+git add frontend/app/
+commit "frontend: Implement Dashboard, Document, and Evaluation pages"
 
 # 8. CI & Docs
 git add .github/workflows/
