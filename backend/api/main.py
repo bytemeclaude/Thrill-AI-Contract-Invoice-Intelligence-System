@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, Depends, HTTPException
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from minio import Minio
@@ -10,21 +11,30 @@ from shared.database import get_db, engine, Base
 from shared.models import Document, DocumentStatus
 # from worker.celery_app import celery_app # Deferred import to avoid circular issues if any, but usually fine.
 from celery import Celery
-from celery import Celery
-from celery import Celery
+from datetime import timedelta
+from fastapi import status
 from qdrant_client.http import models as qmodels
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional
+
 from shared.middleware import RequestLoggerMiddleware, RateLimitMiddleware
+from shared.models import User
+from shared.auth import create_access_token, verify_password, get_password_hash, RoleChecker
+from fastapi.security import OAuth2PasswordRequestForm
 
 # Setup Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create tables (Simple init for now, will use Alembic later)
-Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="AI Contract Intelligence API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create tables (Simple init for now, will use Alembic later)
+    Base.metadata.create_all(bind=engine)
+    yield
+
+app = FastAPI(title="AI Contract Intelligence API", lifespan=lifespan)
 
 # CORS
 app.add_middleware(
@@ -236,8 +246,8 @@ def assess_risk(doc_id: int, db: Session = Depends(get_db)):
     # Solution: We will fetch full text from Qdrant chunks for this doc.
     
     try:
-        from shared.ingestion import VectorService
-        vec = VectorService() # Default collection
+
+
         # Hacky: search with empty query to get all chunks? No limit is 100 usually.
         # Better: Re-download from MinIO and parse? Yes, cleaner.
         # But for speed, let's use the text from the Extraction result if available? No.
@@ -366,9 +376,6 @@ def get_eval_report():
         return {"metrics": {"extraction_f1": 0, "mismatch_accuracy": 0, "risk_recall": 0}, "details": [], "timestamp": "N/A"}
 
 # --- Auth ---
-from shared.auth import create_access_token, verify_password, get_password_hash, RoleChecker
-from fastapi.security import OAuth2PasswordRequestForm
-from shared.models import User, UserRole
 
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
