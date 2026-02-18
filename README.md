@@ -1,6 +1,15 @@
-# AI Contract & Invoice Intelligence System
+# Thrill AI: Enterprise Contract & Invoice Intelligence
 
-An enterprise-grade AI agent that parses, understands, and audits financial documents. It automates the review of Invoices against Contracts and assesses legal risks in contracts using a RAG-based approach.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Stack](https://img.shields.io/badge/Stack-Next.js_16_%7C_FastAPI_%7C_LangChain-blueviolet)](https://nextjs.org)
+[![UI](https://img.shields.io/badge/UI-Premium_Glassmorphism-blue)](https://tailwindcss.com)
+
+**Thrill AI** is an advanced autonomous agent designed to revolutionize financial audits. It seamlessly parses, understands, and cross-verifies **Invoices against Contracts**, identifying discrepancies, legal risks, and compliance issues with human-level precision.
+
+Built for **Chartered Accountants (CAs)** and Enterprise Finance Teams, it automates:
+*   **Vouching**: Automated 3-way matching of Invoice, Contract, and PO.
+*   **Risk Analysis**: RAG-based legal review of contract clauses (Indemnity, Liability, Termination).
+*   **Forensic Audit**: Detecting anomalies, duplicate payments, and GST mismatches.
 
 ## 🚀 Key Features
 

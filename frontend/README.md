@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thrill AI - Premium Frontend
+
+This is the **Next.js 16** frontend for the Thrill AI Contract Intelligence System. It features a **dark-mode-first, glassmorphic design** built with Tailwind CSS v4 and Shadcn UI.
 
 ## Getting Started
 
